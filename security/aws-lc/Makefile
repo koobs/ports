@@ -14,6 +14,7 @@ LICENSE_FILE=	${WRKSRC}/LICENSE
 
 USES=		cmake pathfix
 
+CFLAGS+=		-Wno-error
 CMAKE_OFF=	BUILD_TESTING \
 		ENABLE_DATA_INDEPENDENT_TIMING \
 		ENABLE_DILITHIUM \
@@ -32,5 +33,9 @@ GH_ACCOUNT=	aws
 CONFLICTS_INSTALL=	boringssl libressl* openssl*
 
 PORTSCOUT=	limit:^[0-9]*\.
+
+post-install:
+	${LN} -sf libcrypto.so.1 ${STAGEDIR}${PREFIX}/lib/libcrypto.so
+	${LN} -sf libssl.so.1 ${STAGEDIR}${PREFIX}/lib/libssl.so
 
 .include <bsd.port.mk>

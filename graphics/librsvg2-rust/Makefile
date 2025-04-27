@@ -23,7 +23,7 @@ LIB_DEPENDS=	libdav1d.so:multimedia/dav1d \
 TEST_DEPENDS=	urw-base35-fonts>0:x11-fonts/urw-base35-fonts
 
 USES=		cargo compiler:c11 cpe gettext gnome meson pkgconfig \
-		python:build shebangfix tar:xz vala:build
+		python:build shebangfix tar:xz
 CPE_VENDOR=	gnome
 SHEBANG_FILES=	meson/*.py \
 		benchmarks/*.py \
@@ -41,12 +41,18 @@ CARGO_TEST=	no
 CONFIGURE_ENV=  ${CARGO_ENV}
 MAKE_ENV=       ${CARGO_ENV}
 
-MESON_ARGS=	-Dtests=true
-
-OPTIONS_DEFINE=	DOCS
+OPTIONS_DEFINE=	DOCS TESTS VALA
 
 DOCS_BUILD_DEPENDS=	gi-docgen:textproc/py-gi-docgen
 DOCS_MESON_ENABLED=	docs
+
+TESTS_MESON_ARGS=	-Dtests=true
+
+VALA_USES=		vala:build
+VALA_MESON_ENABLED=	vala
+VALA_PLIST_FILES=	share/vala/vapi/librsvg-2.0.deps \
+			share/vala/vapi/librsvg-2.0.vapi
+
 
 post-install-DOCS-off:
 	${LOCALBASE}/bin/rst2man --no-datestamp ${WRKSRC}/rsvg-convert.rst --output=${STAGEDIR}${PREFIX}/share/man/man1/rsvg-convert.1

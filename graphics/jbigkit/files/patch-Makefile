@@ -1,5 +1,5 @@
---- ./Makefile.orig	2014-03-27 18:47:15.000000000 +0000
-+++ ./Makefile	2014-06-21 22:53:57.000000000 +0000
+--- Makefile.orig	2014-03-27 18:47:15 UTC
++++ Makefile
 @@ -1,24 +1,22 @@
  # Unix makefile for JBIG-KIT
  

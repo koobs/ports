@@ -1,8 +1,6 @@
 PORTNAME=	lief
-DISTVERSION=	0.12.3
-PORTREVISION=	1
+DISTVERSION=	0.15.1
 CATEGORIES=	devel python
-MASTER_SITES=	PYPI
 PKGNAMEPREFIX=	${PYTHON_PKGNAMEPREFIX}
 
 MAINTAINER=	ports@nicandneal.net
@@ -11,9 +9,15 @@ WWW=		https://github.com/lief-project/lief
 
 LICENSE=	APACHE20
 
-USES=		cmake:indirect python zip
+USES=		cmake:indirect python
+
+USE_GITHUB=	yes
 USE_PYTHON=	concurrent distutils
 
+GH_ACCOUNT=	lief-project
+GH_PROJECT=	LIEF
+
+PYSETUP=	${WRKSRC}/api/python/backend/setup.py
 PY_VER=		${PYTHON_VER:S/.//}
 PLIST_SUB=	PY_VER=${PY_VER}
 

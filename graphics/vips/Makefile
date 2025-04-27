@@ -13,11 +13,9 @@ LICENSE=	LGPL21
 LICENSE_FILE=	${WRKSRC}/LICENSE
 
 LIB_DEPENDS=	libexpat.so:textproc/expat2 \
-		libfreetype.so:print/freetype2 \
 		libharfbuzz.so:print/harfbuzz
-RUN_DEPENDS=	bash:shells/bash
 
-USES=		compiler:c++11-lang cpe gettext-tools gnome localbase meson pkgconfig python shebangfix tar:xz
+USES=		compiler:c++11-lang cpe gettext-tools gnome localbase meson pkgconfig shebangfix tar:xz
 USE_GNOME=	glib20
 
 MESON_ARGS=	--default-library=both \
@@ -25,7 +23,6 @@ MESON_ARGS=	--default-library=both \
 		-Dcplusplus=true \
 		-Ddeprecated=true \
 		-Ddoxygen=false \
-		-Dexamples=true \
 		-Dintrospection=disabled \
 		-Dmodules=disabled \
 		-Dnifti=disabled \
@@ -47,13 +44,12 @@ nox11_PKGNAMESUFFIX=	-nox11
 
 CONFLICTS_INSTALL=	vips vips-nox11
 
-SHEBANG_FILES=	tools/vipsprofile
-
-OPTIONS_DEFINE=	CFITSIO DOCS FFTW FONTCONFIG GIF HEIF IMAGEQUANT JPEG JXL LCMS2 LIBARCHIVE LIBEXIF LIBRSVG2 MATIO OPENEXR PANGO PNG POPPLER SPNG TIFF WEBP
+OPTIONS_DEFINE=	CFITSIO DOCS EXAMPLES FFTW FONTCONFIG GIF HEIF IMAGEQUANT JPEG JXL LCMS2 LIBARCHIVE LIBEXIF LIBRSVG2 MATIO OPENEXR PANGO PNG POPPLER SPNG TIFF WEBP
 OPTIONS_RADIO=	MAGICK SIMD
 OPTIONS_RADIO_MAGICK=	IMAGEMAGICK GRAPHICSMAGICK
 OPTIONS_RADIO_SIMD=	HIGHWAY ORC
 OPTIONS_DEFAULT=CFITSIO FFTW FONTCONFIG GIF HEIF HIGHWAY IMAGEMAGICK JPEG JXL LCMS2 LIBARCHIVE LIBEXIF LIBRSVG2 MATIO OPENEXR PANGO PNG POPPLER SPNG TIFF WEBP
+
 FONTCONFIG_IMPLIES=	PANGO
 LIBARCHIVE_DESC=Save image pyramid via libarchive
 HIGHWAY_DESC=	SIMD support via Highway (preferred)
@@ -67,6 +63,9 @@ CFITSIO_LIB_DEPENDS=	libcfitsio.so:astro/cfitsio
 CFITSIO_MESON_ENABLED=	cfitsio
 DOCS_BUILD_DEPENDS=	gtkdocize:textproc/gtk-doc
 DOCS_MESON_TRUE=	gtk_doc
+EXAMPLES_MESON_TRUE=	examples
+EXAMPLES_RUN_DEPENDS=	python
+EXAMPLES_VARS=		SHEBANG_FILES=bin/vipsprofile
 FFTW_LIB_DEPENDS=	libfftw3.so:math/fftw3
 FFTW_MESON_ENABLED=	fftw
 FONTCONFIG_LIB_DEPENDS=	libfontconfig.so:x11-fonts/fontconfig

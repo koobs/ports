@@ -13,6 +13,9 @@ LICENSE_COMB=	dual
 LICENSE_FILE_APACHE20=	${WRKSRC}/LICENSE-Apache2.0
 LICENSE_FILE_GPLv3=	${WRKSRC}/LICENSE-GPLv3
 
+#  File "setup.py", line 278, in <module>
+#    (ETC + "/cloud", [render_tmpl("config/cloud.cfg.tmpl", is_yaml=True)]),
+BUILD_DEPENDS=	${PYTHON_PKGNAMEPREFIX}Jinja2>0:devel/py-Jinja2@${PY_FLAVOR}
 RUN_DEPENDS=	${PYTHON_PKGNAMEPREFIX}configobj>0:devel/py-configobj@${PY_FLAVOR} \
 		${PYTHON_PKGNAMEPREFIX}Jinja2>0:devel/py-Jinja2@${PY_FLAVOR} \
 		${PYTHON_PKGNAMEPREFIX}jsonpatch>0:devel/py-jsonpatch@${PY_FLAVOR} \

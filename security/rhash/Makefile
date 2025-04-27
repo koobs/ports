@@ -23,6 +23,9 @@ CONFIGURE_ARGS=	--prefix="${PREFIX}" --mandir="${PREFIX}/share/man" \
 		--enable-lib-static --enable-openssl-runtime \
 		--extra-cflags="${CFLAGS}" --extra-ldflags="${LDFLAGS}"
 INSTALL_TARGET=	install install-lib-so-link install-pkg-config
+MAKE_ARGS+=	INSTALL_PROGRAM="${INSTALL_PROGRAM}" \
+		INSTALL_DATA="${INSTALL_DATA}" \
+		INSTALL_SHARED="${INSTALL_LIB}"
 
 USES=		cpe
 CPE_VENDOR=	${PORTNAME}_project
@@ -32,11 +35,13 @@ WRKSRC=		${WRKDIR}/RHash-${PORTVERSION}
 
 PORTDOCS=	ChangeLog README.md
 
-OPTIONS_DEFINE=	DOCS NLS
+OPTIONS_DEFINE=	DEBUG DOCS NLS
 OPTIONS_SUB=	yes
 
-NLS_USES=	gettext localbase:ldflags
-NLS_CONFIGURE_ON=	--enable-gettext
+DEBUG_CONFIGURE_ENABLE=	debug
+
+NLS_USES=		gettext localbase:ldflags
+NLS_CONFIGURE_ENABLE=	gettext
 NLS_INSTALL_TARGET=	install-gmo
 
 post-patch:

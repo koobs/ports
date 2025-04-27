@@ -21,6 +21,9 @@ LICENSE_FILE=	${WRKSRC}/COPYING
 USES=		cpe libtool localbase:ldflags pathfix perl5 shebangfix tar:xz
 USE_PERL5=	build
 
+PATCH_SITES=	https://patch-diff.githubusercontent.com/raw/curl/curl/pull/
+PATCHFILES+=	16931.patch:-p1
+
 CONFIGURE_ARGS=	--disable-test-bundles \
 		--disable-unity \
 		--disable-werror \

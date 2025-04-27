@@ -1,0 +1,17 @@
+--- Makefile.orig	2025-04-15 07:08:56 UTC
++++ Makefile
+@@ -1,11 +1,11 @@
+-CFLAGS+=-g
++CFLAGS?=-g
+ CPPFLAGS?=
+ LDFLAGS?=
+ ifneq (,$(findstring arch=i386,$(CFLAGS)))
+ CISA=-m32
+ endif
+-CFL=$(CPPFLAGS) $(CFLAGS) $(CISA) -Wall -W -Wshadow -Wcast-align -Wredundant-decls -Wbad-function-cast -Wcast-qual -Wwrite-strings -Waggregate-return -Wstrict-prototypes -Wmissing-prototypes -Wimplicit-fallthrough -Wunused-parameter -Wundef -D_FILE_OFFSET_BITS=64 -DVERSION=$(VERSION)
+-CFL_OPT=-O3 $(CFL) -Wformat-overflow=2 
++CFL=$(CPPFLAGS) $(CISA) -Wall -W -Wshadow -Wcast-align -Wredundant-decls -Wbad-function-cast -Wcast-qual -Wwrite-strings -Waggregate-return -Wstrict-prototypes -Wmissing-prototypes -Wimplicit-fallthrough -Wunused-parameter -Wundef -D_FILE_OFFSET_BITS=64 -DVERSION=$(VERSION) $(CFLAGS)
++CFL_OPT=-O3 -Wformat-overflow=2 $(CFL) 
+ INSTALL_STRIP=-s
+ 
+ PACKAGE=cpuid

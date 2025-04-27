@@ -1,8 +1,8 @@
 PORTNAME=	cpuid
-DISTVERSION=	20240330
+DISTVERSION=	20250419
 DISTVERSIONSUFFIX=	.src
 CATEGORIES=	sysutils
-MASTER_SITES=	http://www.etallen.com/cpuid/
+MASTER_SITES=	https://www.etallen.com/cpuid/
 PKGNAMESUFFIX=	${CPUID_SUFFIX}
 
 MAINTAINER=	pkubaj@FreeBSD.org
@@ -17,6 +17,9 @@ ONLY_FOR_ARCHS_REASON=	only works with x86 CPUs
 
 USES=		gmake perl5
 USE_PERL5=	build
+
+CFLAGS+=	-pthread
+
 ALL_TARGET=	default
 WRKSRC=		${WRKDIR}/${PORTNAME}-${DISTVERSION}
 
@@ -25,9 +28,6 @@ CPUID_SUFFIX=	-etallen
 
 PLIST_FILES=	bin/cpuid${CPUID_SUFFIX} \
 		share/man/man1/cpuid${CPUID_SUFFIX}.1.gz
-
-post-patch:
-	${REINPLACE_CMD} 's,CFL=.*,& -pthread,' ${WRKSRC}/Makefile
 
 do-install:
 	${INSTALL_PROGRAM} ${WRKSRC}/cpuid ${STAGEDIR}${PREFIX}/bin/cpuid${CPUID_SUFFIX}

@@ -21,7 +21,7 @@ USES=		cpe gmake
 CONFLICTS_INSTALL=	luajit luajit-devel
 
 USE_LDCONFIG=	yes
-MAKE_ARGS=	CC=${CC} Q=
+MAKE_ARGS=	CC=${CC} CFLAGS="${CFLAGS}" LDFLAGS="${LDFLAGS}" Q=
 
 USE_GITHUB=	yes
 GH_ACCOUNT=	openresty

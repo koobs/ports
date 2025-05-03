@@ -1,6 +1,5 @@
 PORTNAME=	keychain
-PORTVERSION=	2.8.5
-PORTREVISION=	1
+PORTVERSION=	2.9.2
 CATEGORIES=	security
 
 MAINTAINER=	garga@FreeBSD.org
@@ -10,19 +9,20 @@ WWW=		https://www.funtoo.org/Keychain
 LICENSE=	GPLv2
 LICENSE_FILE=	${WRKSRC}/COPYING.txt
 
+USES=		perl5
 USE_GITHUB=	yes
-GH_ACCOUNT=	funtoo
+USE_PERL5=	build
 
-CONFLICTS_INSTALL=	py*-pycoin # bin/keychain
+GH_ACCOUNT=	funtoo
 
 OPTIONS_DEFINE=	DOCS
 
-NO_BUILD=	yes
+CONFLICTS_INSTALL=	py*-pycoin # bin/keychain
 
 PLIST_FILES=	bin/${PORTNAME} \
 		share/man/man1/keychain.1.gz
 
-PORTDOCS=	ChangeLog README.md
+PORTDOCS=	ChangeLog.md README.md
 
 .if !exists(${LOCALBASE}/bin/ssh-agent) && !exists(/usr/bin/ssh-agent)
 RUN_DEPENDS+=	ssh-agent:security/openssh-portable

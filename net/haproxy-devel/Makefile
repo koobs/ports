@@ -1,9 +1,8 @@
 PORTNAME=	haproxy
-DISTVERSION=	3.0-dev13
+DISTVERSION=	3.2-dev14
 CATEGORIES=	net www
-MASTER_SITES=	http://www.haproxy.org/download/3.0/src/devel/
+MASTER_SITES=	https://www.haproxy.org/download/3.2/src/devel/
 PKGNAMESUFFIX=	-devel
-DISTFILES=	${PORTNAME}-${DISTVERSION}${EXTRACT_SUFX}
 
 MAINTAINER=	demon@FreeBSD.org
 COMMENT=	Reliable, high performance TCP/HTTP load balancer
@@ -27,9 +26,10 @@ CONFLICTS_INSTALL=	haproxy haproxy17 haproxy18 haproxy20 haproxy22 haproxy23 hap
 ALL_TARGET=	all admin/halog/halog
 MAKE_ARGS=	TARGET=freebsd DEFINE=-DFREEBSD_PORTS USE_GETADDRINFO=1 \
 		USE_ZLIB=1 USE_CPU_AFFINITY=1 USE_ACCEPT4=1 \
-		USE_TFO=1 USE_THREAD_DUMP=1 \
-		CC="${CC}" DEBUG_CFLAGS="" CPU_CFLAGS="${CFLAGS}" \
-		${MAKE_ARGS_${ARCH}}
+		USE_TFO=1 USE_THREAD_DUMP=1 USE_CLOSEFROM=1 \
+		CC="${CC}" ARCH_FLAGS="" DEBUG_CFLAGS="" \
+		CPU_CFLAGS="${CFLAGS}" LDFLAGS="${LDFLAGS}" \
+		${MAKE_ARGS_${ARCH}} V=1
 
 MAKE_ARGS_i386=		USE_LIBATOMIC=
 MAKE_ARGS_powerpc=	USE_LIBATOMIC=
@@ -43,6 +43,7 @@ SPCRE_DESC=		Link pcre(1) statically
 SPCRE2_DESC=		Link pcre2 statically
 DEVICEATLAS_DESC=	DeviceAtlas Device Detection support
 PROMEX_DESC=		Enable Prometheus exporter
+
 OPTIONS_DEFAULT=	DPCRE2 OPENSSL PROMEX
 
 DPCRE_LIB_DEPENDS=	libpcre.so:devel/pcre
@@ -67,7 +68,7 @@ OPTIONS_DEFAULT+=	LUA
 
 .include <bsd.port.pre.mk>
 
-.if ${SSL_DEFAULT:Mlibressl*} || ${SSL_DEFAULT:M*quictls}
+.if ${SSL_DEFAULT:Mlibressl*} || ${SSL_DEFAULT:M*quictls} || ${SSL_DEFAULT:M*aws-lc*}
 OPENSSL_MAKE_ARGS+=	USE_QUIC=1
 .else
 OPENSSL_MAKE_ARGS+=	USE_QUIC=1 USE_QUIC_OPENSSL_COMPAT=1

@@ -19,9 +19,8 @@ LICENSE_PERMS=	dist-mirror dist-sell pkg-mirror pkg-sell auto-accept
 
 MAKE_JOBS_UNSAFE=	yes
 
-USES=		cpe iconv localbase:ldflags ncurses perl5 shebangfix tar:xz
+USES=		cpe iconv localbase:ldflags ncurses shebangfix tar:xz
 
-USE_PERL5=	build
 SHEBANG_LANG=	zsh
 zsh_OLD_CMD=	zsh	# shebang appears as /bin/zsh and just zsh
 SHEBANG_FILES=	Functions/Calendar/* \
@@ -73,8 +72,10 @@ STATIC_CONFIGURE_OFF=	--enable-dynamic  --with-term-lib="ncursesw ncurses"
 DOCS=		LICENCE META-FAQ README \
 		Etc/BUGS Etc/CONTRIBUTORS Etc/FAQ Etc/completion-style-guide \
 		Doc/zsh*.html Doc/zsh.dvi
-DOCS_DISTFILES=	${DISTNAME}-doc${EXTRACT_SUFX}:doc
 DOCS_CONFIGURE_OFF=	--enable-runhelpdir=no
+DOCS_DISTFILES=		${DISTNAME}-doc${EXTRACT_SUFX}:doc
+DOCS_USES=		perl
+DOCS_VARS=		USE_PERL5=build
 
 PORTDOCS=	*
 PORTEXAMPLES=	zlogin zshenv zshrc

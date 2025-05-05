@@ -33,6 +33,8 @@ HAS_CONFIGURE=		yes
 CONFIGURE_SCRIPT=	Configure
 CONFIGURE_ARGS=		-Darchlib=${PREFIX}/${_ARCH_LIB} \
 			-Dcc="${CC}" \
+			-Dcflags="${CFLAGS}" \
+			-Dldflags="${LDFLAGS}" \
 			-Dcf_by=${MAINTAINER:C,@.*,,} \
 			-Dcf_email=${MAINTAINER} \
 			-Dcf_time="`${STAT} -t \"%a %b %d %T %Z %Y\" -f %Sm ${_DISTDIR}/${DISTNAME}${EXTRACT_SUFX}`" \

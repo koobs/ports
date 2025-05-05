@@ -38,11 +38,11 @@ OPTIONS_GROUP_MODULES=	FIPS LEGACY
 OPTIONS_DEFINE_i386=	I386
 OPTIONS_GROUP_PROTOCOLS=NEXTPROTONEG QUIC SCTP SSL3 TLS1 TLS1_1 TLS1_2
 
-OPTIONS_DEFINE=	ASYNC CT FIPS-JITTER KTLS MAN3 RFC3779 SHARED
+OPTIONS_DEFINE=	ASYNC CT FIPS-JITTER KTLS MAN3 RFC3779 SHARED TESTS
 
 OPTIONS_DEFAULT=ASM ASYNC CT DES EC FIPS GOST MAN3 MD4 ML-DSA ML-KEM NEXTPROTONEG \
 		QUIC RFC3779 RC2 RC4 RMD160 SCTP SHARED SLH-DSA SSE2 \
-		THREADPOOL THREADS TLS1 TLS1_1 TLS1_2
+		THREADPOOL TESTS THREADS TLS1 TLS1_1 TLS1_2
 #OPTIONS_DEFAULT+=	KTLS pending updated KTLS patch
 
 OPTIONS_GROUP_OPTIMIZE_amd64=	EC
@@ -96,6 +96,7 @@ SM3_DESC=	SM3 256bit (Chinese standard)
 SM4_DESC=	SM4 128bit (Chinese standard)
 SSE2_DESC=	Runtime SSE2 detection
 SSL3_DESC=	SSLv3 (unsafe)
+TESTS_DESC=	Build test programs
 TLS-DEPRECATED-EC_DESC=	Deprecated elliptic curve groups in TLS (unsafe)
 TLS1_DESC=	TLSv1.0 (requires TLS1_1, TLS1_2)
 TLS1_1_DESC=	TLSv1.1 (requires TLS1_2)
@@ -111,7 +112,7 @@ ${_option:tu}_CONFIGURE_ON=	enable-${_option}
 # Upstream default enabled options
 .for _option in aria asm async ct des gost idea md4 mdc2 ml-kem ml-dsa \
 	legacy nextprotoneg quic rc2 rc4 rfc3779 rmd160 shared slh-dsa \
-	sm2 sm3 sm4 sse2 threads tls-deprecated-ec tls1 tls1_1 tls1_2
+	sm2 sm3 sm4 sse2 tests threads tls-deprecated-ec tls1 tls1_1 tls1_2
 ${_option:tu}_CONFIGURE_OFF=	no-${_option}
 .endfor
 

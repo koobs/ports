@@ -48,6 +48,7 @@ SUB_LIST+=	WWWOWN=${WWWOWN} \
 HAS_CONFIGURE=	yes
 CONFIGURE_ARGS+=--prefix=${ETCDIR} \
 		--with-cc-opt="-I ${LOCALBASE}/include" \
+		--with-ld-opt="${LDFLAGS}" \
 		--conf-path=${ETCDIR}/nginx.conf \
 		--sbin-path=${PREFIX}/sbin/nginx \
 		--pid-path=${NGINX_RUNDIR}/nginx.pid \
@@ -245,10 +246,10 @@ CONFIGURE_ENV+=	EXTRA_PRE_CXXFLAGS="-std=c++14"
 .endif
 
 .if empty(PORT_OPTIONS:MMODSECURITY3) && empty(PORT_OPTIONS:MPASSENGER)
-CONFIGURE_ARGS+=	--with-ld-opt="-L ${LOCALBASE}/lib"
+LDFLAGS+=	-L ${LOCALBASE}/lib
 .else
-CONFIGURE_ARGS+=	--with-ld-opt="-L ${LOCALBASE}/lib -lpcre"
-LIB_DEPENDS+=		libpcre.so:devel/pcre
+LDFLAGS+=	-L ${LOCALBASE}/lib -lpcre
+LIB_DEPENDS+=	libpcre.so:devel/pcre
 .endif
 
 .if ${PORT_OPTIONS:MNJS} && empty(PORT_OPTIONS:MNJS_XML)

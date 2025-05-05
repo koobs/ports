@@ -7,6 +7,9 @@ MASTER_SITES=	https://nginx.org/download/ \
 PKGNAMESUFFIX?=	-devel
 DISTFILES=	${DISTNAME}${EXTRACT_SUFX}
 
+PATCH_SITES=	https://raw.githubusercontent.com/aws/aws-lc/bd4baa196eb3fadf8c692443d5a0ae4b4323f99b/tests/ci/integration/nginx_patch
+PATCHFILES+=	aws-lc-nginx.patch:-p1
+
 MAINTAINER?=	osa@FreeBSD.org
 COMMENT?=	Robust and small WWW server
 WWW=		https://nginx.com/
@@ -48,7 +51,7 @@ SUB_LIST+=	WWWOWN=${WWWOWN} \
 HAS_CONFIGURE=	yes
 CONFIGURE_ARGS+=--prefix=${ETCDIR} \
 		--with-cc-opt="-I ${LOCALBASE}/include" \
-		--with-ld-opt="-L ${LOCALBASE}/lib" \
+		--with-ld-opt="${LDFLAGS}" \
 		--conf-path=${ETCDIR}/nginx.conf \
 		--sbin-path=${PREFIX}/sbin/nginx \
 		--pid-path=${NGINX_RUNDIR}/nginx.pid \
@@ -246,14 +249,14 @@ CONFIGURE_ENV+=	EXTRA_PRE_CXXFLAGS="-std=c++14"
 .endif
 
 .if (PORT_OPTIONS:MMODSECURITY3)
-CONFIGURE_ARGS+=	--with-ld-opt="-L ${LOCALBASE}/lib -lpcre"
+LDFLAGS+=		-L ${LOCALBASE}/lib -lpcre
 LIB_DEPENDS+=		libpcre.so:devel/pcre
 .endif
 
 .if ${PORT_OPTIONS:MNJS}
 NJS_CONFIGURE_ARGS=	--cc-opt="-I${LOCALBASE}/include/quickjs" \
-			--ld-opt="-L${LOCALBASE}/lib" \
 			--with-quickjs
+LDFLAGS+=		-L${LOCALBASE}/lib
 .endif
 
 pre-everything::
